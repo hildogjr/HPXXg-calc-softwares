@@ -1,0 +1,89 @@
+%%HP: T(0)A(D)F(.);
+@ Programa para criar a matriz geral de transformaÁ„o para um sistema
+@de 2 (plano) ou 3 coordenadas
+@ Argumentos:
+@ Autor: Hildo Guillardi J˙nior
+@ VersiÛn: 1.0
+@ Creado con HPUserEdit 6
+@ Creation date: 2012.03.19
+@ Modification date: 2012.03.23
+@ Creado con HPUserEdit 6 - www.unparche.com
+
+´
+   -90 SF
+   "Coordenadas 2D ou 3D?"
+   {
+     { "3D (x,y,z)" 3 }
+     { "2D (x,y)" 2 }
+   }
+   1
+   CHOOSE
+   IF THEN
+     @ Verifica qual o tipo de sistema de coordenadas foi escolhido
+     
+       3 == IF THEN
+         @ O sistema de coordenadas È o espaÁo
+         
+         "RotaÁıes e translaÁ„o"
+         {
+           { "Yaw (psi)" "Angulo azimutal, de giro em 0x"  }
+           { "ç X" "TranslaÁ„o no eixo x"  }
+           { "Pitch (ï)" "¬ngulo de elevaÁ„o, giro em 0y"  }
+           { "ç Y" "TranslaÁ„o no eixo y"  }
+           { "Roll  (¯)" "¬ngulo de rotaÁ„o em torno de 0z"  }
+           { "ç Z" "TranslaÁ„o no eixo Z"  }
+         }
+         2
+         { }
+         { 0 0 0 0 0 0 }
+         INFORM
+         IF THEN
+           
+            @ Calcula a matriz de transformaÁ„o para coordenadas 3D
+            OBJç DROP
+            ç psi px teta py phi pz
+            ´
+               psi teta phi 3 COLç EULERM çROW DROP
+               [0 0 0]
+               4 ROWç
+               çCOL DROP
+               px py pz 1 4 ROWç
+               4 COLç
+            ª
+            
+         END
+         
+       ELSE
+         @ O sistema de coordenadas È o plano
+
+         "RotaÁıes e translaÁ„o"
+         {
+            { "Roll (¯)" "¬ngulo de rotaÁ„o sentido x0y"  }
+            { "ç X" "TranslaÁ„o no eixo x"  }
+            { "ç Y" "TranslaÁ„o no eixo y"  }
+         }
+         1
+         { }
+         { 0 0 0 }
+         INFORM
+         IF THEN
+
+            @ Calcula a matriz de transformaÁ„o para coordenadas 3D
+            OBJç DROP
+            ç teta px py
+            ´
+              teta 1 COLç EULERM çROW DROP
+              [0 0]
+              3 ROWç
+              çCOL DROP
+              px py 1 3 ROWç
+              3 COLç
+            ª
+            
+         END
+
+       END
+     
+     
+   END
+ª

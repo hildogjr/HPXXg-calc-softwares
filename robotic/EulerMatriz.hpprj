@@ -1,0 +1,71 @@
+%%HP: T(0)A(D)F(.);
+@ Programa para criar a matriz de rotaÁ„o de Euler para um
+@sistema de coordenadas de 2 ou 3 dimensıes, dependendo da
+@quantidade de argumentos de entrada
+@ Argumentos:
+@ Autor: Hildo Guillardi J˙nior
+@ VersiÛn: 1.0
+@ Creado con HPUserEdit 6
+@ Creation date: 2012.03.19
+@ Modification date: 2012.03.23
+@ Creado con HPUserEdit 6 - www.unparche.com
+
+@ Entre com um vetor contendo 2 ou 3 posiÁıes que indicam a
+@rotaÁ„o a ser realizada no sistema que a calculadora se
+@encontra no momento (graus, radianos ou grados).
+@ A ordem das rotaÁ„o s„o: 
+@ (psi) azimute, ‚ngulo de rotaÁ„o em 0x
+@ (fi ¯) rolamento, ‚ngulo de rotaÁ„o em 0y
+@ (teta ï) inclinaÁ„o, ‚ngulo de rotaÁ„o em 0z
+@ Entra-se como [psi fi teta] ou [teta]
+
+´
+    @ Mede o tamanho do vetor de entrada e o quebra para guardas nas outras
+    @vari·veis facilitando a referÍncia a memÛria    
+    OBJç
+    OBJç DROP
+    ç numAngulos
+    ´
+    
+       CASE
+           numAngulos 3 == THEN
+             ç psi teta phi
+             ´
+                @ Primeira coluna
+                phi COS teta COS *
+                phi SIN teta COS *
+                teta SIN NEG
+                3 ROWç
+                @ Segunda coluna
+                phi COS teta SIN psi SIN * * phi SIN psi COS * -
+                phi SIN teta SIN psi SIN * * phi COS psi COS * +
+                teta COS psi SIN *
+                3 ROWç
+                @ Terceira coluna
+                phi COS teta SIN psi COS * * phi SIN psi SIN * +
+                phi SIN teta SIN psi COS * * phi COS psi SIN * -
+                teta COS psi COS *
+                3 ROWç
+                @ Junta as linhas
+                3 COLç
+             ª
+          END
+          numAngulos 1 == THEN
+             ç teta
+             ´
+                @ Primeira coluna
+                teta COS
+                teta SIN
+                2 ROWç
+                @ Segunda coluna
+                teta SIN NEG
+                teta COS
+                2 ROWç
+                @ Junta as linhas
+                2 COLç
+             ª
+          END
+       END
+    
+    ª
+ª

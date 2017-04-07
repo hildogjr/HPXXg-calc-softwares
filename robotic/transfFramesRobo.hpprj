@@ -1,0 +1,57 @@
+%%HP: T(0)A(D)F(.);
+@ Programa para criar a matriz de transformada de frames seguindo a
+@normatiÁ„o proposta por Richard P. Paul (1981)
+@ Argumentos:
+@ Autor: Hildo Guillardi J˙nior
+@ VersiÛn: 1.0
+@ Creado con HPUserEdit 6
+@ Creation date: 2012.03.30
+@ Modification date: -
+@ Creado con HPUserEdit 6 - www.unparche.com
+
+´
+   "DefiniÁıes do frame"
+   {
+       { "ï (teta) Ú" "RotaÁ„o no eixo z" }
+       { "d (x0-x) " "Dist‚ncia entre eixos x" }
+       { "l (z0-z) " "Dist‚ncia entre z" }
+       { "å (alpha)" "RotaÁ„o no eixo x" }
+    }
+    1
+    { }
+    { 0 0 0 0 }
+    INFORM    
+    IF THEN
+       OBJç DROP
+       ç teta d l alpha
+       ´
+          @ RotaÁ„o em z
+              teta COS teta SIN NEG 0 0 4 COLç
+              teta SIN teta COS 0 0 4 COLç
+              [0 0 1 0]
+              [0 0 0 1]
+              4 ROWç
+          @ Dist‚ncia entre eixos x, translaÁ„o em z
+              [1 0 0 0]
+              [0 1 0 0]
+              0 0 1  4 COLç
+              [0 0 0 1]
+              4 ROWç
+              *
+          @ Dist‚ncia entre eixos z, translaÁ„o em x
+              1 0 0 l 4 COLç
+              [0 1 0 0]
+              [0 0 1 0]
+              [0 0 0 1]
+              4 ROWç
+              *
+          @ TotaÁ„o em x
+              [1 0 0 0]
+              0 alpha COS alpha SIN NEG 0 4 COLç
+              0 alpha SIN alpha COS 0 4 COLç
+              [0 0 0 1]
+              4 ROWç
+              *
+       ª
+    END
+ª

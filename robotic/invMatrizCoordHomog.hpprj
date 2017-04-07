@@ -1,0 +1,27 @@
+%%HP: T(0)A(D)F(.);
+@ Calcula a inversa da matriz de coordenadas homogeneas de qualquer dimensão
+@economizando processamento, sem calcular diretamente a inversa
+@ Argumentos:
+@ Autor: Hildo Guillardi Júnior
+@ Versión: 1.0
+@ Creado con HPUserEdit 6
+@ Creation date: 2012.03.23
+@ Modification date: 2012.03.26
+@ Creado con HPUserEdit 6 - www.unparche.com
+
+@ A única entrada é a matriz de coordenadas simétricas que deve ser quadrada
+
+«
+  DUP SIZE OBJ DROP
+   euler nL nC
+  «
+    euler nC ROW- DROP
+    nL COL- SWAP @ Retira a última linha
+    TRAN @ Inverte (transpondo) a matriz de Euler
+    SWAP 2 PICK SWAP * NEG @ A origem da coordenada de referência escrita na coordenada nova
+    nC COL+ @ Coloca a coluna da transformação de translação
+    1 nC 1 - FOR cont 0 NEXT 1 @ Cria os elementos da última linha
+      nC ROW
+    nC ROW+ @ Coloca a linha da coordenada virtual
+  »
+»
