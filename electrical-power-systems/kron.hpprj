@@ -1,0 +1,73 @@
+%%HP: T(0)A(D)F(.);
+@ Argumentos: Matriz de M quadrada e k a linha/coluna para reduÁ„o
+@ Autor: Hildo Guillardi J˙nior
+@ VersiÛn: 1.0 final
+@ Creation date: 2010.12.09
+@ Modification date: 2010.12.10
+@ Creado con HPUserEdit 6 - www.unparche.com
+
+@ Criado para a disciplina Sistemas elÈtricos de potÍncia 1
+@ Programa para efetuar a reduÁ„o de Kron para uma matriz
+
+´
+  ç M k
+  ´
+    M çROW ç linhas
+    ´
+      @ Separa o vetor relativo a reduÁ„o    
+      linhas k - 1 + PICK
+      k GETI SWAP
+      DROP
+      @ Guarda o vetor linha e o resultado
+      / ç linhaK
+      ´
+        @ Vai realizando a subtraÁ„o linha a linha
+        1 linhas FOR cont
+          linhas cont - 1 + k ã IF THEN @ N„o realiza para a linha base de reduÁ„o
+            @ Separa o elemento a zerar
+            k GETI SWAP
+            DROP
+            linhaK * -
+            @ Joga o resulta para cima da pilha
+            cont 1 > IF THEN
+               @ Agrupa as linhas
+               cont 2 > IF THEN
+                  SWAP               
+                  çROW
+                  1 +
+                  ROWç
+               ELSE
+                  SWAP            
+                  2 ROWç
+               END                   
+            END
+            
+            linhas cont ã IF THEN
+               SWAP
+            END
+            
+          ELSE
+            DROP
+            SWAP
+          END
+        NEXT
+      ª
+
+
+      @ Remove a coluna reduzida (zerada)
+      çCOL
+      ç colunas
+      ´
+        
+        colunas k - 1 + @ Indica na pilha onde est· a coluna zerada
+        ROLL DROP @ Exclui a coluna zerada
+        colunas 1 - COLç
+      ª 
+     
+    ª
+  ª
+   
+  @ Exibe o resultado na tela
+  "Answer by Hildo (HGJr)"
+  SWAP
+ª

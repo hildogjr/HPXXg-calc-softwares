@@ -1,0 +1,169 @@
+%%HP: T(0)A(D)F(.);
+@ Argumentos: Sem argumentos de entrada pois usa uma interface
+@ Autor: Hildo Guillardi J˙nior
+@ VersiÛn: 1.0
+@ Creation date: 2010.12.10
+@ Modification date: 2010.02.19 as 20:11
+@ Creado con HPUserEdit 6 - www.unparche.com
+
+@ Criado para a disciplina de Sistemas elÈtricos de potÍncia 1
+@ Programa para introduzir uma nova barra em um sistema elÈtrico representado por uma matriz de imped‚ncias
+
+´
+  "Inserir nova barra ao sistema"
+  {
+    { "Zbus" "Matriz de imped‚ncia original" }
+    { "zb" "Imped‚ncia de conex„o" }
+    { "Barra 1" "Barra em que ocorrer· a conex„o" }
+    { "Barra 2" "Outro extremo da conex„o" }
+  }
+  1  
+  { }
+  { [[.1 .2 .3][.2 .4 .5][.3 .5 .6]] .1 0 1 }
+  INFORM
+  IF THEN
+    OBJç DROP
+    @ Coloca as vari·veis "barra1" e "barra2 na ordem
+    2 PICK 2 PICK > IF THEN
+      SWAP @ O n˙mero da barra 2 deve ser sempre maior no algorÌtimo abaixo
+    END
+    @ Calcula dimens„o da matriz quadrada de imped‚ncia do sistema
+    4 PICK SIZE OBJç DROP DROP @ Despreza um por ser quadrada
+    @ Guarda os par‚metros em vari·veis locais
+    ç Zbus zb barra1 barra2 dim @ (… uma pilha, sai na ordem inversa a entrada)
+    ´
+
+      @ Parte do programa com a lÛgica de manuseio da matriz Zbus original
+      
+      @ Nova barra conectada ao terra?
+      @ Revisada 19/02/2011 ‡s 19:00      
+      barra1 0 ==
+      barra2 dim 1 + ==
+      AND IF THEN
+        @ Caso 1 da apostila de SEP1
+        @ Nova barra conectada ao terra        
+        @ Coloca a nova linha
+        Zbus çROW
+        Zbus çROW 1 - DROPN 0 * @ Guarda os elementos base para formaÁ„o da nova linha
+        SWAP
+        1 + ROWç @ Cria a nova linha zerada
+        çCOL @ J· deixa a matriz desmembrada em colunas
+        @ Coloca a nova coluna
+        Zbus çCOL 1 - DROPN 0 * @ Guarda os elementos para formaÁ„o da nova coluna
+        çROW zb SWAP 1 + ROWç @ Criou a nova coluna
+        SWAP
+        1 + çCOL
+      END
+      
+      
+      @ Nova barra conectada ao sistema por uma linha?
+      @ Revisada 19/02/2011 ‡s 19:58
+      barra1 dim â
+      barra1 0 > AND
+      barra2 dim 1 + ==    
+      AND IF THEN
+        @ Caso 2 da apostila de SEP1
+        @ Nova barra conectada a outra barra do sistema        
+        
+        @ Cria nova linha
+        Zbus çROW
+        dim barra1 - 2 + PICK
+        SWAP
+        1 + ROWç
+        
+        @ Cria a nova coluna
+        çCOL
+        dim barra1 - 2 + PICK
+        SWAP
+        1 + COLç
+        
+        @ Substitui  o elemento da ˙ltima diagonal
+        barra2 SQ @ PosiÁ„o do novo elemento em um vetor corrido a partir das linhas da matriz
+        Zbus {barra1,barra1} GET zb + @ Novo elemento
+        PUT
+      END
+      
+      
+      @ Aterramento de um ponto do sistema?
+      @ Revisada 19/02/2011 ‡s 19:58      
+      barra1 0 ==
+      barra2 dim â
+      barra2 0 > AND
+      AND IF THEN
+        @ Caso 3 da apostila de SEP1
+        @ Conex„o entre uma barra existente e o terra
+        @ O cÛdigo È o mesmo da situaÁ„o acima porÈm o resultado È reduzido por Kron
+        @ Poderia ser uma excess„o da situaÁ„o acima, porÈm n„o otimizei o cÛdigo
+        @ Cria nova linha
+        Zbus çROW
+        dim barra2 - 2 + PICK
+        SWAP
+        1 + ROWç
+
+        @ Cria a nova coluna
+        çCOL
+        dim barra2 - 2 + PICK
+        SWAP
+        1 + COLç
+
+        @ Substitui  o elemento da ˙ltima diagonal
+        barra2 SQ @ PosiÁ„o do novo elemento em um vetor corrido a partir das linhas da matriz
+        Zbus {barra1,barra1} GET zb + @ Novo elemento
+        PUT
+                
+        @ Realiza a reduÁ„o de Kron, iqualando a 0 a equaÁ„o da barra nova
+        barra2 KRON
+      END
+      
+      
+      @ Conex„o em dois pontos no sistema j· existente?
+      @ Revisada 19/02/2011 ‡s 20:11
+      barra1 dim â
+      barra1 0 > AND
+      barra2 dim â
+      barra2 0 > AND
+      barra1 barra2 ã AND @ Trata a excess„o dos dois iguais      
+      AND IF THEN
+        @ Caso 4 da apostila de SEP1
+        @ Conex„o entre duas barras existentes no sistema inicial
+        
+        @ Cria nova linha
+        Zbus çROW
+        dim barra1 - 2 + PICK
+        dim barra2 - 3 + PICK
+        - @ Realiza o calculo da diferenÁa
+        SWAP
+        1 + ROWç
+        
+        @ Cria a nova coluna
+        çCOL
+        dim barra1 - 2 + PICK
+        dim barra2 - 3 + PICK
+        - @ Realiza a diferenÁa das duas colunas
+        SWAP
+        1 + ROWç
+        
+        @ Calcula o ˙ltimo elemento da diagonal
+        Zbus {barra1 barra1} GET
+        Zbus {barra1 barra2} GET -
+        Zbus {barra2 barra2} GET +
+        Zbus {barra2 barra1} GET -
+        zb +
+        dim 1 + SQ
+        SWAP
+        PUT
+        
+        @ Realiza a reduÁ„o de Kron
+        barra2 KRON
+      END
+    
+    
+    ª
+    
+    @ Exibe o resultado na tela
+    "Answer by Hildo (HGJr)"
+    SWAP
+    
+  ELSE
+  END
+ª
