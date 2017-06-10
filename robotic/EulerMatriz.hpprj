@@ -1,71 +1,72 @@
 %%HP: T(0)A(D)F(.);
-@ Programa para criar a matriz de rotação de Euler para um
-@sistema de coordenadas de 2 ou 3 dimensões, dependendo da
+@ Programa para criar a matriz de rotaÃ§Ã£o de Euler para um
+@sistema de coordenadas de 2 ou 3 dimensÃµes, dependendo da
 @quantidade de argumentos de entrada
 @ Argumentos:
-@ Autor: Hildo Guillardi Júnior
-@ Versión: 1.0
+@ Autor: Hildo Guillardi JÃºnior
+@ VersiÃ³n: 1.0
 @ Creado con HPUserEdit 6
 @ Creation date: 2012.03.19
 @ Modification date: 2012.03.23
 @ Creado con HPUserEdit 6 - www.unparche.com
+@ This software is released under the GNU-GPL 3.0 or later.
 
-@ Entre com um vetor contendo 2 ou 3 posições que indicam a
-@rotação a ser realizada no sistema que a calculadora se
+@ Entre com um vetor contendo 2 ou 3 posiÃ§Ãµes que indicam a
+@rotaÃ§Ã£o a ser realizada no sistema que a calculadora se
 @encontra no momento (graus, radianos ou grados).
-@ A ordem das rotação são: 
-@ (psi) azimute, ângulo de rotação em 0x
-@ (fi ø) rolamento, ângulo de rotação em 0y
-@ (teta •) inclinação, ângulo de rotação em 0z
+@ A ordem das rotaÃ§Ã£o sÃ£o: 
+@ (psi) azimute, Ã¢ngulo de rotaÃ§Ã£o em 0x
+@ (fi Ã¸) rolamento, Ã¢ngulo de rotaÃ§Ã£o em 0y
+@ (teta â€¢) inclinaÃ§Ã£o, Ã¢ngulo de rotaÃ§Ã£o em 0z
 @ Entra-se como [psi fi teta] ou [teta]
 
-«
+Â«
     @ Mede o tamanho do vetor de entrada e o quebra para guardas nas outras
-    @variáveis facilitando a referência a memória    
-    OBJ
-    OBJ DROP
-     numAngulos
-    «
+    @variÃ¡veis facilitando a referÃªncia a memÃ³ria    
+    OBJÂ
+    OBJÂ DROP
+    Â numAngulos
+    Â«
     
        CASE
            numAngulos 3 == THEN
-              psi teta phi
-             «
+             Â psi teta phi
+             Â«
                 @ Primeira coluna
                 phi COS teta COS *
                 phi SIN teta COS *
                 teta SIN NEG
-                3 ROW
+                3 ROWÂ
                 @ Segunda coluna
                 phi COS teta SIN psi SIN * * phi SIN psi COS * -
                 phi SIN teta SIN psi SIN * * phi COS psi COS * +
                 teta COS psi SIN *
-                3 ROW
+                3 ROWÂ
                 @ Terceira coluna
                 phi COS teta SIN psi COS * * phi SIN psi SIN * +
                 phi SIN teta SIN psi COS * * phi COS psi SIN * -
                 teta COS psi COS *
-                3 ROW
+                3 ROWÂ
                 @ Junta as linhas
-                3 COL
-             »
+                3 COLÂ
+             Â»
           END
           numAngulos 1 == THEN
-              teta
-             «
+             Â teta
+             Â«
                 @ Primeira coluna
                 teta COS
                 teta SIN
-                2 ROW
+                2 ROWÂ
                 @ Segunda coluna
                 teta SIN NEG
                 teta COS
-                2 ROW
+                2 ROWÂ
                 @ Junta as linhas
-                2 COL
-             »
+                2 COLÂ
+             Â»
           END
        END
     
-    »
-»
+    Â»
+Â»
