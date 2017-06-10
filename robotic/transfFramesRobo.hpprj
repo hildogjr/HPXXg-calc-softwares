@@ -1,57 +1,58 @@
 %%HP: T(0)A(D)F(.);
 @ Programa para criar a matriz de transformada de frames seguindo a
-@normatiÁ„o proposta por Richard P. Paul (1981)
+@normati√ß√£o proposta por Richard P. Paul (1981)
 @ Argumentos:
-@ Autor: Hildo Guillardi J˙nior
-@ VersiÛn: 1.0
+@ Autor: Hildo Guillardi J√∫nior
+@ Versi√≥n: 1.0
 @ Creado con HPUserEdit 6
 @ Creation date: 2012.03.30
 @ Modification date: -
 @ Creado con HPUserEdit 6 - www.unparche.com
+@ This software is released under the GNU-GPL 3.0 or later.
 
-´
-   "DefiniÁıes do frame"
+¬´
+   "Defini√ß√µes do frame"
    {
-       { "ï (teta) Ú" "RotaÁ„o no eixo z" }
-       { "d (x0-x) " "Dist‚ncia entre eixos x" }
-       { "l (z0-z) " "Dist‚ncia entre z" }
-       { "å (alpha)" "RotaÁ„o no eixo x" }
+       { "‚Ä¢ (teta) √≤" "Rota√ß√£o no eixo z" }
+       { "d (x0-x) " "Dist√¢ncia entre eixos x" }
+       { "l (z0-z) " "Dist√¢ncia entre z" }
+       { "≈í (alpha)" "Rota√ß√£o no eixo x" }
     }
     1
     { }
     { 0 0 0 0 }
     INFORM    
     IF THEN
-       OBJç DROP
-       ç teta d l alpha
-       ´
-          @ RotaÁ„o em z
-              teta COS teta SIN NEG 0 0 4 COLç
-              teta SIN teta COS 0 0 4 COLç
+       OBJ¬ç DROP
+       ¬ç teta d l alpha
+       ¬´
+          @ Rota√ß√£o em z
+              teta COS teta SIN NEG 0 0 4 COL¬ç
+              teta SIN teta COS 0 0 4 COL¬ç
               [0 0 1 0]
               [0 0 0 1]
-              4 ROWç
-          @ Dist‚ncia entre eixos x, translaÁ„o em z
+              4 ROW¬ç
+          @ Dist√¢ncia entre eixos x, transla√ß√£o em z
               [1 0 0 0]
               [0 1 0 0]
-              0 0 1  4 COLç
+              0 0 1  4 COL¬ç
               [0 0 0 1]
-              4 ROWç
+              4 ROW¬ç
               *
-          @ Dist‚ncia entre eixos z, translaÁ„o em x
-              1 0 0 l 4 COLç
+          @ Dist√¢ncia entre eixos z, transla√ß√£o em x
+              1 0 0 l 4 COL¬ç
               [0 1 0 0]
               [0 0 1 0]
               [0 0 0 1]
-              4 ROWç
+              4 ROW¬ç
               *
-          @ TotaÁ„o em x
+          @ Tota√ß√£o em x
               [1 0 0 0]
-              0 alpha COS alpha SIN NEG 0 4 COLç
-              0 alpha SIN alpha COS 0 4 COLç
+              0 alpha COS alpha SIN NEG 0 4 COL¬ç
+              0 alpha SIN alpha COS 0 4 COL¬ç
               [0 0 0 1]
-              4 ROWç
+              4 ROW¬ç
               *
-       ª
+       ¬ª
     END
-ª
+¬ª
