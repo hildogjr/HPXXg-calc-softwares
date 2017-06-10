@@ -1,29 +1,30 @@
 %%HP: T(0)A(D)F(.);
-@ Argumentos: Matriz de M quadrada e k a linha/coluna para redução
-@ Autor: Hildo Guillardi Júnior
-@ Versión: 1.0 final
+@ Argumentos: Matriz de M quadrada e k a linha/coluna para reduÃ§Ã£o
+@ Autor: Hildo Guillardi JÃºnior
+@ VersiÃ³n: 1.0 final
 @ Creation date: 2010.12.09
 @ Modification date: 2010.12.10
 @ Creado con HPUserEdit 6 - www.unparche.com
+@ This software is released under the GNU-GPL 3.0 or later.
 
-@ Criado para a disciplina Sistemas elétricos de potência 1
-@ Programa para efetuar a redução de Kron para uma matriz
+@ Criado para a disciplina Sistemas elÃ©tricos de potÃªncia 1
+@ Programa para efetuar a reduÃ§Ã£o de Kron para uma matriz
 
-«
-   M k
-  «
-    M ROW  linhas
-    «
-      @ Separa o vetor relativo a redução    
+Â«
+  Â M k
+  Â«
+    M ÂROW Â linhas
+    Â«
+      @ Separa o vetor relativo a reduÃ§Ã£o    
       linhas k - 1 + PICK
       k GETI SWAP
       DROP
       @ Guarda o vetor linha e o resultado
-      /  linhaK
-      «
-        @ Vai realizando a subtração linha a linha
+      / Â linhaK
+      Â«
+        @ Vai realizando a subtraÃ§Ã£o linha a linha
         1 linhas FOR cont
-          linhas cont - 1 + k ‹ IF THEN @ Não realiza para a linha base de redução
+          linhas cont - 1 + k â€¹ IF THEN @ NÃ£o realiza para a linha base de reduÃ§Ã£o
             @ Separa o elemento a zerar
             k GETI SWAP
             DROP
@@ -33,16 +34,16 @@
                @ Agrupa as linhas
                cont 2 > IF THEN
                   SWAP               
-                  ROW
+                  ÂROW
                   1 +
-                  ROW
+                  ROWÂ
                ELSE
                   SWAP            
-                  2 ROW
+                  2 ROWÂ
                END                   
             END
             
-            linhas cont ‹ IF THEN
+            linhas cont â€¹ IF THEN
                SWAP
             END
             
@@ -51,23 +52,23 @@
             SWAP
           END
         NEXT
-      »
+      Â»
 
 
       @ Remove a coluna reduzida (zerada)
-      COL
-       colunas
-      «
+      ÂCOL
+      Â colunas
+      Â«
         
-        colunas k - 1 + @ Indica na pilha onde está a coluna zerada
+        colunas k - 1 + @ Indica na pilha onde estÃ¡ a coluna zerada
         ROLL DROP @ Exclui a coluna zerada
-        colunas 1 - COL
-      » 
+        colunas 1 - COLÂ
+      Â» 
      
-    »
-  »
+    Â»
+  Â»
    
   @ Exibe o resultado na tela
   "Answer by Hildo (HGJr)"
   SWAP
-»
+Â»
