@@ -1,15 +1,16 @@
 %%HP: T(0)A(D)F(.);
-@ Programa para criar a matriz geral de transformação para um sistema
+@ Programa para criar a matriz geral de transformaÃ§Ã£o para um sistema
 @de 2 (plano) ou 3 coordenadas
 @ Argumentos:
-@ Autor: Hildo Guillardi Júnior
-@ Versión: 1.0
+@ Autor: Hildo Guillardi JÃºnior
+@ VersiÃ³n: 1.0
 @ Creado con HPUserEdit 6
 @ Creation date: 2012.03.19
 @ Modification date: 2012.03.23
 @ Creado con HPUserEdit 6 - www.unparche.com
+@ This software is released under the GNU-GPL 3.0 or later.
 
-«
+Â«
    -90 SF
    "Coordenadas 2D ou 3D?"
    {
@@ -22,16 +23,16 @@
      @ Verifica qual o tipo de sistema de coordenadas foi escolhido
      
        3 == IF THEN
-         @ O sistema de coordenadas é o espaço
+         @ O sistema de coordenadas Ã© o espaÃ§o
          
-         "Rotações e translação"
+         "RotaÃ§Ãµes e translaÃ§Ã£o"
          {
            { "Yaw (psi)" "Angulo azimutal, de giro em 0x"  }
-           { " X" "Translação no eixo x"  }
-           { "Pitch (•)" "Ângulo de elevação, giro em 0y"  }
-           { " Y" "Translação no eixo y"  }
-           { "Roll  (ø)" "Ângulo de rotação em torno de 0z"  }
-           { " Z" "Translação no eixo Z"  }
+           { "Â X" "TranslaÃ§Ã£o no eixo x"  }
+           { "Pitch (â€¢)" "Ã‚ngulo de elevaÃ§Ã£o, giro em 0y"  }
+           { "Â Y" "TranslaÃ§Ã£o no eixo y"  }
+           { "Roll  (Ã¸)" "Ã‚ngulo de rotaÃ§Ã£o em torno de 0z"  }
+           { "Â Z" "TranslaÃ§Ã£o no eixo Z"  }
          }
          2
          { }
@@ -39,28 +40,28 @@
          INFORM
          IF THEN
            
-            @ Calcula a matriz de transformação para coordenadas 3D
-            OBJ DROP
-             psi px teta py phi pz
-            «
-               psi teta phi 3 COL EULERM ROW DROP
+            @ Calcula a matriz de transformaÃ§Ã£o para coordenadas 3D
+            OBJÂ DROP
+            Â psi px teta py phi pz
+            Â«
+               psi teta phi 3 COLÂ EULERM ÂROW DROP
                [0 0 0]
-               4 ROW
-               COL DROP
-               px py pz 1 4 ROW
-               4 COL
-            »
+               4 ROWÂ
+               ÂCOL DROP
+               px py pz 1 4 ROWÂ
+               4 COLÂ
+            Â»
             
          END
          
        ELSE
-         @ O sistema de coordenadas é o plano
+         @ O sistema de coordenadas Ã© o plano
 
-         "Rotações e translação"
+         "RotaÃ§Ãµes e translaÃ§Ã£o"
          {
-            { "Roll (ø)" "Ângulo de rotação sentido x0y"  }
-            { " X" "Translação no eixo x"  }
-            { " Y" "Translação no eixo y"  }
+            { "Roll (Ã¸)" "Ã‚ngulo de rotaÃ§Ã£o sentido x0y"  }
+            { "Â X" "TranslaÃ§Ã£o no eixo x"  }
+            { "Â Y" "TranslaÃ§Ã£o no eixo y"  }
          }
          1
          { }
@@ -68,17 +69,17 @@
          INFORM
          IF THEN
 
-            @ Calcula a matriz de transformação para coordenadas 3D
-            OBJ DROP
-             teta px py
-            «
-              teta 1 COL EULERM ROW DROP
+            @ Calcula a matriz de transformaÃ§Ã£o para coordenadas 3D
+            OBJÂ DROP
+            Â teta px py
+            Â«
+              teta 1 COLÂ EULERM ÂROW DROP
               [0 0]
-              3 ROW
-              COL DROP
-              px py 1 3 ROW
-              3 COL
-            »
+              3 ROWÂ
+              ÂCOL DROP
+              px py 1 3 ROWÂ
+              3 COLÂ
+            Â»
             
          END
 
@@ -86,4 +87,4 @@
      
      
    END
-»
+Â»
